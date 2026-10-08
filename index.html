@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Derf4s Fingers adalah ruang baca, latihan mengetik, motivasi harian, dan jurnal pribadi dari Derf4s Community bersama Lomboko DevLab."
+    />
+    <meta name="theme-color" content="#f4f1e9" />
+    <meta name="application-name" content="Derf4s Fingers" />
+    <meta name="author" content="Derf4s Community & Lomboko DevLab" />
+    <meta
+      name="keywords"
+      content="Derf4s, Derfas, Derf4as, Derf4as community, Derf4s Community, Derfas Community, komunitas Derfas, komunitas Derf4as, latihan mengetik, baca sambil mengetik"
+    />
+    <link rel="canonical" href="https://nottrzz.github.io/derf4s-fingers/" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:site_name" content="Derf4s Fingers" />
+    <meta property="og:title" content="Derf4s Fingers — baca, tumbuh, dan bercerita" />
+    <meta
+      property="og:description"
+      content="Ruang baca, latihan mengetik, motivasi harian, dan jurnal pribadi dari Derf4s Community."
+    />
+    <meta property="og:url" content="https://nottrzz.github.io/derf4s-fingers/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Derf4s Fingers — baca, tumbuh, dan bercerita" />
+    <meta
+      name="twitter:description"
+      content="Baca cerita, latihan mengetik, dan temukan ruang untuk bertumbuh bersama Derf4s Community."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Derf4s Fingers",
+        "alternateName": [
+          "Derf4s",
+          "Derfas",
+          "Derf4as",
+          "Derf4s Community",
+          "Derfas Community",
+          "Komunitas Derfas",
+          "Komunitas Derf4as"
+        ],
+        "url": "https://nottrzz.github.io/derf4s-fingers/",
+        "inLanguage": "id-ID",
+        "description": "Ruang baca, latihan mengetik, motivasi harian, dan jurnal pribadi dari Derf4s Community bersama Lomboko DevLab.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Derf4s Community",
+          "alternateName": ["Derfas Community", "Komunitas Derfas", "Komunitas Derf4as"],
+          "url": "https://nottrzz.github.io/derf4s-fingers/"
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Lora:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Derf4s Fingers beranda">
+        <span class="logo-lockup">
+          <span class="brand-wordmark">DERF<span class="logo-four">4<svg class="logo-crown" viewBox="0 0 28 20" aria-hidden="true"><path d="M2 5.5 8.1 10l5.7-8 5.3 8.1L26 4.5l-2 12H4L2 5.5Z" fill="currentColor"/><path d="M4 18h19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>S</span>
+          <span class="brand-tagline">FINGERS · READ & TYPE</span>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Menu utama">
+        <a href="#latihan">Baca & ketik</a>
+        <a href="#buku">Perpustakaan</a>
+        <a href="#motivasi">Motivasi</a>
+        <a href="#cerita">Ruang cerita</a>
+      </nav>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro" aria-labelledby="page-title">
+        <div class="eyebrow"><span class="eyebrow-rule"></span> BACA PELAN-PELAN, KETIK SEIRAMA</div>
+        <h1 id="page-title">Satu halaman.<br /><em>Satu latihan kecil.</em></h1>
+        <p>Pilih bacaan yang kamu suka. Baca kalimatnya, lalu ketik sambil mengikuti ceritanya.</p>
+      </section>
+
+      <section class="library" id="latihan" aria-labelledby="library-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-number">01 / PILIH SUASANA</span>
+            <h2 id="library-title">Mau baca apa hari ini?</h2>
+          </div>
+          <button class="shuffle-button" type="button" id="shuffle-passage">
+            <span aria-hidden="true">↻</span> Acak bacaan
+          </button>
+        </div>
+        <div class="category-list" role="group" aria-label="Pilih kategori bacaan">
+          <button class="category-button is-selected" type="button" data-category="psychology" aria-pressed="true">Psikologi gelap</button>
+          <button class="category-button" type="button" data-category="stories" aria-pressed="false">Cerita pendek</button>
+          <button class="category-button" type="button" data-category="growth" aria-pressed="false">Pengembangan diri</button>
+          <button class="category-button" type="button" data-category="science" aria-pressed="false">Sains & alam</button>
+        </div>
+
+        <article class="reading-card" aria-live="polite">
+          <div class="book-spine" aria-hidden="true"></div>
+          <div class="reading-content">
+            <div class="reading-meta">
+              <span class="reading-category" id="reading-category">PSIKOLOGI</span>
+              <span class="reading-counter" id="reading-counter">BACAAN 01</span>
+            </div>
+            <h3 id="passage-title">Membaca jeda</h3>
+            <p class="passage-byline" id="passage-byline">Catatan kecil tentang memahami orang</p>
+            <p class="passage-description" id="passage-description"></p>
+            <div class="reading-bottom">
+              <span><span aria-hidden="true">◷</span> <span id="reading-time">1 menit baca</span></span>
+              <span class="original-note">Bacaan orisinal Derf4s Fingers</span>
+            </div>
+          </div>
+          <div class="book-decoration" aria-hidden="true">“</div>
+        </article>
+      </section>
+
+      <section class="practice-section" aria-labelledby="practice-title">
+        <div class="practice-heading">
+          <div>
+            <span class="section-number">02 / BACA & KETIK</span>
+            <h2 id="practice-title">Ikuti kata demi kata.</h2>
+          </div>
+          <div class="duration-control" role="group" aria-label="Pilih durasi latihan">
+            <span class="control-caption">WAKTU</span>
+            <button class="duration-button" type="button" data-duration="30" aria-pressed="false">30 dtk</button>
+            <button class="duration-button is-selected" type="button" data-duration="60" aria-pressed="true">60 dtk</button>
+            <button class="duration-button" type="button" data-duration="120" aria-pressed="false">120 dtk</button>
+          </div>
+        </div>
+
+        <div class="stats-row" aria-live="polite">
+          <div class="stat stat-primary"><span class="stat-label">KECEPATAN</span><div class="stat-value"><span id="wpm">0</span><small>WPM</small></div></div>
+          <div class="stat"><span class="stat-label">AKURASI</span><div class="stat-value"><span id="accuracy">100</span><small>%</small></div></div>
+          <div class="stat stat-time"><span class="stat-label">SISA WAKTU</span><div class="stat-value"><span id="timer">60</span><small>DET</small></div></div>
+          <div class="stat"><span class="stat-label">REKOR BACAAN</span><div class="stat-value"><span id="best-score">—</span><small>WPM</small></div></div>
+        </div>
+        <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progress"></div></div>
+
+        <div class="typing-label">
+          <span><span class="live-dot"></span> <span id="typing-prompt">Klik teks untuk mulai mengetik</span></span>
+          <span><kbd>ESC</kbd> reset</span>
+        </div>
+        <div class="typing-area" id="typing-area">
+          <p class="passage-text" id="passage-text" aria-hidden="true"></p>
+          <textarea
+            id="typing-input"
+            class="typing-input"
+            aria-label="Ketik bacaan yang terlihat di area latihan"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            rows="5"
+          ></textarea>
+        </div>
+        <div class="practice-footer">
+          <span>Kesalahan bisa diperbaiki dengan backspace.</span>
+          <button class="restart-button" type="button" id="restart-button"><span aria-hidden="true">↻</span> Ulangi halaman</button>
+        </div>
+        <div class="result-panel" id="result-panel" hidden>
+          <div>
+            <span class="result-kicker">HALAMAN SELESAI</span>
+            <strong id="result-message">Bagus, kamu berhasil!</strong>
+            <span id="result-detail"></span>
+          </div>
+          <button class="result-button" type="button" id="result-restart">Baca lagi <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+
+      <section class="books-section" id="buku" aria-labelledby="books-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-number">03 / RAK BACAAN</span>
+            <h2 id="books-title">Pilih bacaan berikutnya.</h2>
+          </div>
+          <span class="section-aside">Cerita orisinal, untuk dibaca perlahan.</span>
+        </div>
+        <div class="book-grid" id="book-grid"></div>
+      </section>
+
+      <section class="daily-section" id="motivasi" aria-labelledby="motivation-title">
+        <div class="daily-heading">
+          <span class="section-number">04 / SEJENAK UNTUK DIRI</span>
+          <span class="today-date" id="today-date"></span>
+        </div>
+        <div class="quote-card">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <div>
+            <h2 id="motivation-title">Pengingat hari ini</h2>
+            <blockquote id="daily-quote"></blockquote>
+            <span class="quote-credit">CATATAN KECIL DERF4S</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="journal-section" id="cerita" aria-labelledby="journal-title">
+        <div class="journal-intro">
+          <span class="section-number">05 / RUANG CERITA</span>
+          <h2 id="journal-title">Hari ini rasanya bagaimana?</h2>
+          <p>Tulis apa pun yang ingin kamu keluarkan. Catatanmu tersimpan hanya di browser ini.</p>
+        </div>
+        <form class="journal-form" id="journal-form">
+          <label class="visually-hidden" for="journal-entry">Ceritakan perasaanmu hari ini</label>
+          <textarea id="journal-entry" maxlength="800" rows="4" placeholder="Hari ini aku merasa..."></textarea>
+          <div class="journal-form-footer">
+            <span id="journal-count">0 / 800</span>
+            <button class="journal-submit" type="submit">Simpan catatan <span aria-hidden="true">↗</span></button>
+          </div>
+          <p class="journal-feedback" id="journal-feedback" role="status"></p>
+        </form>
+        <div class="journal-list" id="journal-list" aria-live="polite"></div>
+      </section>
+
+      <section class="community-note" aria-labelledby="community-title">
+        <span class="section-number">TENTANG RUANG INI</span>
+        <h2 id="community-title">Dari Derf4s Community, untuk siapa saja yang ingin bertumbuh.</h2>
+        <p>
+          Derf4s Fingers adalah ruang santai untuk membaca, latihan mengetik, dan menulis refleksi.
+          Baik kamu datang lewat pencarian Derf4s, Derfas Community, komunitas Derfas, atau komunitas
+          Derf4as, kamu selalu diterima di sini. Dirangkai bersama Lomboko DevLab.
+        </p>
+      </section>
+
+      <p class="closing-note"><span aria-hidden="true">✳</span> Tak perlu terburu-buru. Satu kalimat yang selesai juga sebuah kemajuan.</p>
+    </main>
+
+    <footer class="site-footer">
+      <span>© 2026 Derf4s Fingers</span>
+      <span class="footer-divider"></span>
+      <span>Dirangkai pelan-pelan oleh <strong>Lomboko DevLab</strong></span>
+    </footer>
+  </body>
+</html>
