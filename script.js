@@ -179,27 +179,46 @@ function renderBookShelf() {
 }
 
 const dailyNotes = [
-  "Kamu tidak harus menyelesaikan semuanya hari ini. Pilih satu hal kecil, lalu mulai dari sana.",
-  "Istirahat bukan berarti menyerah. Kadang berhenti sebentar adalah cara untuk menjaga langkah tetap panjang.",
-  "Tidak apa-apa jika prosesmu berbeda. Hidup bukan perlombaan dengan garis mulai yang sama.",
-  "Hari yang berat tidak menghapus semua hal baik yang sudah kamu usahakan.",
-  "Boleh merasa belum siap, dan tetap mencoba dengan langkah yang sederhana.",
-  "Kemajuan kecil tetaplah kemajuan, meski hari ini hanya kamu yang menyadarinya.",
-  "Kamu layak berbicara kepada diri sendiri dengan kelembutan yang sama seperti kepada teman.",
+  {
+    day: "Minggu",
+    text: "Kamu tidak harus menyelesaikan semuanya hari ini. Pilih satu hal kecil, lalu mulai dari sana.",
+  },
+  {
+    day: "Senin",
+    text: "Kamu tidak perlu menaklukkan seluruh minggu hari ini. Satu langkah pertama sudah cukup untuk memulai.",
+  },
+  {
+    day: "Selasa",
+    text: "Tidak apa-apa jika prosesmu berbeda. Hidup bukan perlombaan dengan garis mulai yang sama.",
+  },
+  {
+    day: "Rabu",
+    text: "Berhenti sebentar bukan berarti tertinggal. Istirahat juga bagian dari perjalanan.",
+  },
+  {
+    day: "Kamis",
+    text: "Hari yang berat tidak menghapus semua hal baik yang sudah kamu usahakan.",
+  },
+  {
+    day: "Jumat",
+    text: "Kemajuan kecil tetaplah kemajuan, meski hari ini hanya kamu yang menyadarinya.",
+  },
+  {
+    day: "Sabtu",
+    text: "Kamu layak berbicara kepada diri sendiri dengan kelembutan yang sama seperti kepada teman.",
+  },
 ];
 
 function renderDailyNote() {
   const now = new Date();
-  const dayOfYear = Math.floor(
-    (Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - Date.UTC(now.getFullYear(), 0, 0)) /
-      86400000,
-  );
+  const note = dailyNotes[now.getDay()];
   document.querySelector("#today-date").textContent = now.toLocaleDateString("id-ID", {
-    weekday: "long",
     day: "numeric",
     month: "long",
+    year: "numeric",
   });
-  document.querySelector("#daily-quote").textContent = dailyNotes[dayOfYear % dailyNotes.length];
+  document.querySelector("#today-weekday").textContent = note.day;
+  document.querySelector("#daily-quote").textContent = note.text;
 }
 
 const journalStorageKey = "derf4s-journal-notes";

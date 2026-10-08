@@ -190,7 +190,10 @@
       <section class="daily-section" id="motivasi" aria-labelledby="motivation-title">
         <div class="daily-heading">
           <span class="section-number">04 / SEJENAK UNTUK DIRI</span>
-          <span class="today-date" id="today-date"></span>
+          <div class="date-stamp">
+            <strong id="today-weekday"></strong>
+            <span class="today-date" id="today-date"></span>
+          </div>
         </div>
         <div class="quote-card">
           <span class="quote-mark" aria-hidden="true">“</span>
@@ -204,16 +207,16 @@
 
       <section class="journal-section" id="cerita" aria-labelledby="journal-title">
         <div class="journal-intro">
-          <span class="section-number">05 / RUANG CERITA</span>
+          <span class="section-number">05 / RUANG CERITA PRIBADI</span>
           <h2 id="journal-title">Hari ini rasanya bagaimana?</h2>
-          <p>Tulis apa pun yang ingin kamu keluarkan. Catatanmu tersimpan hanya di browser ini.</p>
+          <p>Tulis apa pun yang ingin kamu keluarkan. Catatan ini hanya tersimpan di browsermu dan tidak dibagikan ke publik.</p>
         </div>
         <form class="journal-form" id="journal-form">
           <label class="visually-hidden" for="journal-entry">Ceritakan perasaanmu hari ini</label>
           <textarea id="journal-entry" maxlength="800" rows="4" placeholder="Hari ini aku merasa..."></textarea>
           <div class="journal-form-footer">
             <span id="journal-count">0 / 800</span>
-            <button class="journal-submit" type="submit">Simpan catatan <span aria-hidden="true">↗</span></button>
+            <button class="journal-submit" type="submit">Simpan pribadi <span aria-hidden="true">↗</span></button>
           </div>
           <p class="journal-feedback" id="journal-feedback" role="status"></p>
         </form>

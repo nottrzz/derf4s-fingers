@@ -437,15 +437,30 @@ h1 em {
 
 .daily-heading {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 14px;
+}
+
+.date-stamp {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  color: #79766c;
+  white-space: nowrap;
+}
+
+.date-stamp strong {
+  color: var(--olive-dark);
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .today-date {
   color: #858174;
   font-family: var(--serif);
-  font-size: 11px;
+  font-size: 10px;
   font-style: italic;
   text-transform: capitalize;
 }
@@ -458,6 +473,24 @@ h1 em {
   padding: 23px 27px;
   border: 1px solid #e2ddd1;
   background: #eeeee5;
+}
+
+.daily-heading {
+  align-items: flex-start;
+}
+
+.date-stamp {
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.date-stamp strong {
+  font-size: 13px;
+}
+
+.today-date {
+  font-size: 9px;
 }
 
 .quote-mark {
