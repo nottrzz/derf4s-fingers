@@ -106,6 +106,11 @@ const categoryButtons = [...document.querySelectorAll(".category-button")];
 const journalForm = document.querySelector("#journal-form");
 const journalInput = document.querySelector("#journal-entry");
 const journalList = document.querySelector("#journal-list");
+const moodForm = document.querySelector("#mood-form");
+const moodOptions = [...document.querySelectorAll(".mood-option")];
+const moodFeedback = document.querySelector("#mood-feedback");
+const moodBars = document.querySelector("#mood-bars");
+const moodTotal = document.querySelector("#mood-total");
 
 let duration = 60;
 let remaining = duration;
@@ -222,6 +227,139 @@ function renderDailyNote() {
 }
 
 const journalStorageKey = "derf4s-journal-notes";
+const moodNames = {
+  senang: "Senang",
+  semangat: "Semangat",
+  tenang: "Tenang",
+  lelah: "Lelah",
+  sedih: "Sedih",
+};
+const moodStorageKey = "derf4s-community-mood";
+const visitorStorageKey = "derf4s-community-visitor";
+
+function getSupabaseConfig() {
+  const config = window.DERF4S_SUPABASE;
+  if (!config?.url || !config?.anonKey) return null;
+
+  try {
+    const url = new URL(config.url);
+    if (url.protocol !== "https:" && url.hostname !== "localhost") return null;
+    return { url: url.origin, anonKey: config.anonKey };
+  } catch {
+    return null;
+  }
+}
+
+function getJakartaDate() {
+  const parts = new Intl.DateTimeFormat("en", {
+    timeZone: "Asia/Jakarta",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
+function getVisitorId() {
+  let visitorId = localStorage.getItem(visitorStorageKey);
+  if (!visitorId) {
+    visitorId = crypto.randomUUID();
+    localStorage.setItem(visitorStorageKey, visitorId);
+  }
+  return visitorId;
+}
+
+function updateMoodSelection(mood) {
+  moodOptions.forEach((button) => {
+    const selected = button.dataset.mood === mood;
+    button.classList.toggle("is-selected", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+}
+
+function renderMoodSummary(entries) {
+  const counts = Object.fromEntries(Object.keys(moodNames).map((mood) => [mood, 0]));
+  entries.forEach((entry) => {
+    if (Object.hasOwn(counts, entry.mood)) counts[entry.mood] = Number(entry.total);
+  });
+
+  const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+  moodTotal.textContent = `${total} pilihan hari ini`;
+  moodBars.replaceChildren();
+
+  Object.entries(moodNames).forEach(([mood, label]) => {
+    const count = counts[mood];
+    const percentage = total ? Math.round((count / total) * 100) : 0;
+    const row = document.createElement("div");
+    row.className = "mood-result-row";
+    const heading = document.createElement("div");
+    heading.className = "mood-result-label";
+    const name = document.createElement("span");
+    name.textContent = label;
+    const value = document.createElement("span");
+    value.textContent = `${count} · ${percentage}%`;
+    const track = document.createElement("div");
+    track.className = "mood-result-track";
+    track.setAttribute("role", "img");
+    track.setAttribute("aria-label", `${label}: ${count} pilihan, ${percentage}%`);
+    const fill = document.createElement("div");
+    fill.className = `mood-result-fill mood-${mood}`;
+    fill.style.width = `${percentage}%`;
+    heading.append(name, value);
+    track.append(fill);
+    row.append(heading, track);
+    moodBars.append(row);
+  });
+}
+
+async function requestMoodRpc(functionName, body) {
+  const config = getSupabaseConfig();
+  if (!config) throw new Error("Mood check-in belum dikonfigurasi.");
+
+  const response = await fetch(`${config.url}/rest/v1/rpc/${functionName}`, {
+    method: "POST",
+    headers: {
+      apikey: config.anonKey,
+      Authorization: `Bearer ${config.anonKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    const details = await response.text();
+    console.error(`Supabase ${functionName} failed (${response.status}): ${details}`);
+    throw new Error(`Permintaan gagal (${response.status}).`);
+  }
+  return response;
+}
+
+async function loadMoodSummary() {
+  if (!getSupabaseConfig()) {
+    moodTotal.textContent = "Belum tersambung";
+    const unavailable = document.createElement("p");
+    unavailable.className = "mood-unavailable";
+    unavailable.textContent = "Ringkasan komunitas akan muncul setelah koneksi bersama diaktifkan.";
+    moodBars.replaceChildren(unavailable);
+    return;
+  }
+
+  try {
+    const response = await requestMoodRpc("get_daily_mood_summary", {});
+    renderMoodSummary(await response.json());
+    const savedMood = JSON.parse(localStorage.getItem(moodStorageKey) || "null");
+    if (savedMood?.date === getJakartaDate()) updateMoodSelection(savedMood.mood);
+    else updateMoodSelection("");
+    moodFeedback.textContent = "";
+  } catch (error) {
+    moodTotal.textContent = "Belum tersedia";
+    const unavailable = document.createElement("p");
+    unavailable.className = "mood-unavailable";
+    unavailable.textContent = "Hasil belum dapat dimuat. Silakan coba lagi sebentar lagi.";
+    moodBars.replaceChildren(unavailable);
+    moodFeedback.textContent = error.message;
+  }
+}
 
 function renderJournal() {
   const entries = JSON.parse(localStorage.getItem(journalStorageKey) || "[]");
@@ -419,6 +557,50 @@ journalInput.addEventListener("input", () => {
   journalCount.textContent = `${journalInput.value.length} / 800`;
 });
 
+moodOptions.forEach((button) => {
+  button.addEventListener("click", () => {
+    updateMoodSelection(button.dataset.mood);
+    moodFeedback.textContent = "";
+  });
+});
+
+moodForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const selectedMood = moodOptions.find((button) => button.classList.contains("is-selected"));
+  if (!selectedMood) {
+    moodFeedback.textContent = "Pilih suasana hati yang paling dekat denganmu dulu.";
+    return;
+  }
+  if (!getSupabaseConfig()) {
+    moodFeedback.textContent =
+      "Check-in bersama belum aktif. Admin perlu menghubungkan project Supabase terlebih dahulu.";
+    return;
+  }
+
+  const submitButton = document.querySelector("#mood-submit");
+  submitButton.disabled = true;
+  moodFeedback.textContent = "Menyimpan pilihan anonim…";
+  try {
+    const visitorId = getVisitorId();
+    await requestMoodRpc("submit_daily_mood", {
+      p_visitor_id: visitorId,
+      p_mood: selectedMood.dataset.mood,
+    });
+    localStorage.setItem(
+      moodStorageKey,
+      JSON.stringify({ date: getJakartaDate(), mood: selectedMood.dataset.mood }),
+    );
+    moodFeedback.textContent = "Terima kasih sudah berbagi suasana hari ini.";
+    await loadMoodSummary();
+    moodFeedback.textContent = "Terima kasih sudah berbagi suasana hari ini.";
+  } catch (error) {
+    console.error("Mood check-in could not be saved:", error);
+    moodFeedback.textContent = `Pilihan belum tersimpan. ${error.message}`;
+  } finally {
+    submitButton.disabled = false;
+  }
+});
+
 journalForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const text = journalInput.value.trim();
@@ -447,4 +629,5 @@ journalForm.addEventListener("submit", (event) => {
 renderBookShelf();
 renderDailyNote();
 renderJournal();
+loadMoodSummary();
 choosePassage(category);
