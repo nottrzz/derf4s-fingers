@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nottrzz.github.io/derf4s-fingers/sitemap.xml
+Sitemap: https://derf4s-fingers.vercel.app/sitemap.xml
